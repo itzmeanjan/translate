@@ -1,0 +1,7 @@
+name: translate
+version: 1.0.0
+description: A simple to use Dart package, for translating text using Yandex.Translate API
+author: Anjan Roy<anjanroy@yandex.com>
+homepage: https://www.github.com/itzmeanjan/translate
+environment:
+  sdk: '>=2.1.0 <3.0.0'
