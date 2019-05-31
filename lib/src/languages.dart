@@ -21,14 +21,26 @@ class Languages {
   ///
   /// To which you can translate or these languages can be detected
   ///
-  /// In case of errors, possible return value will be
+  /// In case of success, returns
   /// {
-  ///   'error': {
-  ///       'message': '...'
-  ///   }
+  ///   .
+  ///   .
+  ///   .
+  ///   'ru': 'Russian'
+  ///   'en': 'English',
+  ///   .
+  ///   .
+  ///   .
   /// }
-  Future<Map<String, Map<String, String>>> fetch() {
-    var completer = Completer<Map<String, Map<String, String>>>();
+  ///
+  /// In case of error, returns
+  /// {
+  ///   'error': ' ... '
+  /// }
+  ///
+
+  Future<Map<String, String>> fetch() {
+    var completer = Completer<Map<String, String>>();
     HttpClient()
         .getUrl(Uri.https(domain, path, {
           'key': apiKey,
@@ -43,21 +55,15 @@ class Languages {
               .transform(utf8.decoder)
               .transform(json.decoder)
               .listen(
-                (data) => response.statusCode != 200
-                    ? completer.complete(
-                        {
-                          'error': {
-                            'message': Map<String, dynamic>.from(data)
-                                .remove('message') as String
-                          }
-                        },
-                      )
-                    : completer.complete(
-                        {
-                          'langs': Map<String, String>.from(
+                (data) => completer.complete(
+                      response.statusCode == 200
+                          ? Map<String, String>.from(
                               Map<String, dynamic>.from(data).remove('langs'))
-                        },
-                      ),
+                          : {
+                              'error': Map<String, dynamic>.from(data)
+                                  .remove('message') as String
+                            },
+                    ),
                 onError: (e) => completer.complete({}),
                 cancelOnError: true,
               ),
