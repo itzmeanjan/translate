@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 0.28.2">
+  <meta name="description" content="translate API docs, for the Dart programming language.">
+  <title>translate - Dart API docs</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+  
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://www.github.com/itzmeanjan/translate">translate package</a></li>
+  </ol>
+  <div class="self-name">translate</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="https://www.github.com/itzmeanjan/translate">translate package</a></li>
+    </ol>
+    
+    <h5 class="hidden-xs"><span class="package-name">translate</span> <span class="package-kind">package</span></h5>
+    <ol>
+          <li class="section-title">Libraries</li>
+          <li><a href="translate/translate-library.html">translate</a></li>
+    </ol>
+  </div>
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <section class="desc markdown">
+        <h1 id="translate">translate</h1>
+<p>A simple to use Dart package, for detecting &amp; translating <em>text</em> and <em>html pages</em> using Yandex.Translate API</p>
+<p>Show some ❤️, by putting ⭐</p>
+<h2 id="what-does-it-do-">what does it do ?</h2><ul><li>Fetches list of languages along with language codes, supported by Yandex.Translate API</li><li>Detects which language given text belongs to</li><li>Translates text or html page to certain language, denoted by language code</li></ul>
+<h2 id="how-to-use-">How to use ?</h2>
+<p>First get yourself a <em>Yandex.Translate</em> API Key, which can be found <a href="https://translate.yandex.com/developers/keys">here</a>.</p>
+<p><u><b>Fetch list of supported language :</b></u></p>
+<pre class="language-dart"><code class="language-dart">Languages('api_key')
+      .fetch()
+      .then(
+        (data) =&gt; print(data),
+        onError: (e) =&gt; print(e),
+      ).then((val) =&gt; exit(0));
+</code></pre>
+<p><img src="images/supported_languages.png" alt="supported_languages"></p>
+<p>Response in case of success,</p>
+<pre class="language-json"><code class="language-json">{
+    ru: 'Russian',
+    en: 'English',
+}
+</code></pre>
+<p>Response in case of error,</p>
+<pre class="language-json"><code class="language-json">{
+    error: ' ... '
+}
+</code></pre>
+<p><u><b>Detect language of text :</b></u></p>
+<pre class="language-dart"><code class="language-dart">DetectIt('api_key')
+      .detect('Hello World', hint: [
+        'en',
+        'de',
+        'ru',
+        'hi',
+      ]) // hints are to be prioritized by platform while detecting language, if provided
+      .then(
+        (data) =&gt; print(data),
+        onError: (e) =&gt; print(e),
+      )
+      .then((val) =&gt; exit(0));
+</code></pre>
+<p><img src="images/detect_language.png" alt="detect_language"></p>
+<p>Response in case of success,</p>
+<pre class="language-json"><code class="language-json">{
+    lang: 'en'
+}
+</code></pre>
+<p>Response in case of error,</p>
+<pre class="language-json"><code class="language-json">{
+    error: ' ... '
+}
+</code></pre>
+<p><b><u>Translate Text :</u></b></p>
+<pre class="language-dart"><code class="language-dart">TranslateIt('api_key')
+      .translate(
+          '&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;Hello World&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Hello World&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;',
+          'en-ru', // only `ru` will also do same job
+          type: 'html') // type is `html`, cause this text is markedup
+      .then(
+        (data) =&gt; print(data),
+        onError: (e) =&gt; print(e),
+      )
+      .then((val) =&gt; exit(0));
+</code></pre>
+<h2 id="english--russian-----------------html_page_in_englishimageshtml_page_in_englishpnghtml_page_in_russianimageshtml_page_in_russianpng">English | Russian
+--------|---------
+<img src="images/html_page_in_english.png" alt="html_page_in_english">|<img src="images/html_page_in_russian.png" alt="html_page_in_russian"></h2>
+<p>Response in case of success,</p>
+<pre class="language-json"><code class="language-json">{
+    text: ' ... '
+}
+</code></pre>
+<p>Response in case of error,</p>
+<pre class="language-json"><code class="language-json">{
+    error: ' ... '
+}
+</code></pre>
+<h2 id="courtesy-">Courtesy :</h2>
+<p>Translation API is powered by <a href="https://translate.yandex.com/">Yandex.Translate</a>, so all thanks goes to them. </p>
+<p>If you're interested in learning more about T&amp;C, take a look <a href="https://tech.yandex.com/translate/doc/dg/concepts/design-requirements-docpage/">here</a>.</p>
+<p>You can also go for <a href="https://translate.yandex.com/developers/prices">priced version</a>.</p>
+<p>Hoping, it was helpful 😉</p>
+      </section>
+      
+        <section class="summary">
+            <h2>Libraries</h2>
+          <dl>
+            <dt id="translate">
+              <span class="name"><a href="translate/translate-library.html">translate</a></span>             
+            </dt>
+            <dd>
+              
+            </dd>          </dl>
+        </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    translate 1.0.0
+  </span>
+
+  
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

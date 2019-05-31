@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the detect method from the DetectIt class, for the Dart programming language.">
+  <title>detect method - DetectIt class - translate library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="../..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+  
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">translate</a></li>
+    <li><a href="translate/translate-library.html">translate</a></li>
+    <li><a href="translate/DetectIt-class.html">DetectIt</a></li>
+    <li class="self-crumb">detect method</li>
+  </ol>
+  <div class="self-name">detect</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="index.html">translate</a></li>
+      <li><a href="translate/translate-library.html">translate</a></li>
+      <li><a href="translate/DetectIt-class.html">DetectIt</a></li>
+      <li class="self-crumb">detect method</li>
+    </ol>
+    
+    <h5>DetectIt class</h5>
+    <ol>
+      <li class="section-title"><a href="translate/DetectIt-class.html#constructors">Constructors</a></li>
+      <li><a href="translate/DetectIt/DetectIt.html">DetectIt</a></li>
+    
+      <li class="section-title">
+        <a href="translate/DetectIt-class.html#instance-properties">Properties</a>
+      </li>
+      <li><a href="translate/DetectIt/apiKey.html">apiKey</a></li>
+      <li><a href="translate/DetectIt/domain.html">domain</a></li>
+      <li><a href="translate/DetectIt/path.html">path</a></li>
+      <li class="inherited"><a href="translate/DetectIt/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="translate/DetectIt/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title"><a href="translate/DetectIt-class.html#instance-methods">Methods</a></li>
+      <li><a href="translate/DetectIt/detect.html">detect</a></li>
+      <li class="inherited"><a href="translate/DetectIt/noSuchMethod.html">noSuchMethod</a></li>
+      <li class="inherited"><a href="translate/DetectIt/toString.html">toString</a></li>
+    
+      <li class="section-title inherited"><a href="translate/DetectIt-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="translate/DetectIt/operator_equals.html">operator ==</a></li>
+    
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <div><h1><span class="kind-method">detect</span> method</h1></div>
+
+    <section class="multi-line-signature">
+      <span class="returntype">Future<span class="signature">&lt;<wbr><span class="type-parameter">Map<span class="signature">&lt;<wbr><span class="type-parameter">String</span>, <span class="type-parameter">String</span>&gt;</span></span>&gt;</span></span>
+            <span class="name ">detect</span>
+(<wbr><span class="parameter" id="detect-param-text"><span class="type-annotation">String</span> <span class="parameter-name">text</span>, {</span> <span class="parameter" id="detect-param-hint"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter">String</span>&gt;</span></span> <span class="parameter-name">hint</span></span> })
+      
+    </section>
+    <section class="desc markdown">
+      <p>Detects which language provided text belongs to</p>
+<p>In case of success, returns</p>
+<p>{
+  'lang': 'en'
+}</p>
+<p>In case of error, returns</p>
+<p>{
+   'error': ' ... '
+}</p>
+<p>You may also pass a list of language codes, as <code>hint</code>, which will be prioritized while detecting language</p>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span></h2>
+      <pre class="language-dart"><code class="language-dart">Future&lt;Map&lt;String, String&gt;&gt; detect(
+  String text, {
+  List&lt;String&gt; hint,
+}) {
+  var completer = Completer&lt;Map&lt;String, String&gt;&gt;();
+  if (text == null || text.isEmpty)
+    completer.complete({
+      &#39;error&#39;: &#39;Text no okay&#39;,
+    });
+  else
+    HttpClient()
+        .getUrl(Uri.https(
+            domain,
+            path,
+            hint != null &amp;&amp; hint.isNotEmpty
+                ? {
+                    &#39;key&#39;: apiKey,
+                    &#39;text&#39;: text,
+                    &#39;hint&#39;: hint.join(&#39;,&#39;),
+                  }
+                : {
+                    &#39;key&#39;: apiKey,
+                    &#39;text&#39;: text,
+                  }))
+        .then(
+          (HttpClientRequest request) =&gt; request.close(),
+          onError: (e) =&gt; completer.complete({
+                &#39;error&#39;: e.toString(),
+              }),
+        )
+        .then(
+          (HttpClientResponse response) =&gt;
+              response.transform(utf8.decoder).transform(json.decoder).listen(
+                    (data) =&gt; completer.complete(
+                          response.statusCode == 200
+                              ? {
+                                  &#39;lang&#39;: Map&lt;String, dynamic&gt;.from(data)
+                                      .remove(&#39;lang&#39;) as String
+                                }
+                              : {
+                                  &#39;error&#39;: Map&lt;String, dynamic&gt;.from(data)
+                                      .remove(&#39;message&#39;) as String
+                                },
+                        ),
+                    onError: (e) =&gt; completer.complete({
+                          &#39;error&#39;: e.toString(),
+                        }),
+                    cancelOnError: true,
+                  ),
+          onError: (e) =&gt; completer.complete({
+                &#39;error&#39;: e.toString(),
+              }),
+        );
+  return completer.future;
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    translate 1.0.0
+  </span>
+
+  
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>
