@@ -3,6 +3,8 @@ A simple to use Dart package, for detecting &amp; translating *text* and *html p
 
 Show some :heart:, by putting :star:
 
+**This package is readily avaiable for [use](https://pub.dev/packages/translate).**
+
 ## what does it do ?
 - Fetches list of languages along with language codes, supported by Yandex.Translate API
 - Detects which language given text belongs to
